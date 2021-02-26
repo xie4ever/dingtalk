@@ -8,8 +8,7 @@ import (
 
 // TestUnknownMessageType ...
 func TestUnknownMessageType(t *testing.T) {
-	err := g.SendMessage("unknown message")
-	if err != nil {
+	if err := s.Send("unknown message"); err != nil {
 		if dingtalk.IsSevereError(err) {
 			return
 		}
@@ -20,8 +19,7 @@ func TestUnknownMessageType(t *testing.T) {
 // TestEmptyText ...
 func TestEmptyText(t *testing.T) {
 	msg := dingtalk.NewText()
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		if dingtalk.IsSevereError(err) {
 			return
 		}
@@ -36,8 +34,7 @@ func TestEmptyTittle(t *testing.T) {
 		## 来临罢！
 	`
 	msg := dingtalk.NewMarkdown().SetMarkdown("", text)
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		if dingtalk.IsSevereError(err) {
 			return
 		}
@@ -49,8 +46,7 @@ func TestEmptyTittle(t *testing.T) {
 func TestEmptyContent(t *testing.T) {
 	title := `homo兴，野兽王！`
 	msg := dingtalk.NewMarkdown().SetMarkdown(title, "")
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		if dingtalk.IsSevereError(err) {
 			return
 		}
@@ -62,8 +58,7 @@ func TestEmptyContent(t *testing.T) {
 func TestSendTooFast(t *testing.T) {
 	msg := dingtalk.NewText().SetText("哼哼哼，啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊啊啊啊！")
 	for i := 0; i < 30; i++ {
-		err := g.SendMessage(msg)
-		if err != nil {
+		if err := s.Send(msg); err != nil {
 			if dingtalk.IsRepeatableError(err) {
 				return
 			}
@@ -81,8 +76,7 @@ func TestTextTooLarge(t *testing.T) {
 		largeText += `哼哼哼，啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊啊啊啊！`
 	}
 	msg := dingtalk.NewText().SetText(largeText)
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		if dingtalk.IsSevereError(err) {
 			return
 		}

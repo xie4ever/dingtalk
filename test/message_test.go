@@ -12,17 +12,16 @@ const (
 	secretKey = "your secret key" // 分配给应用的SecretKey（钉钉群机器人处获取）
 )
 
-var g *dingtalk.Group
+var s *dingtalk.Sender
 
 func init() {
-	g, _ = dingtalk.InitDingTalkGroup(webHook, secretKey)
+	s, _ = dingtalk.NewSender(webHook, secretKey)
 }
 
 // TestSendText ...
 func TestSendText(t *testing.T) {
 	msg := dingtalk.NewText().SetText("哼哼哼，啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊啊啊啊！")
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -39,8 +38,7 @@ func TestSendMarkdown(t *testing.T) {
 		* 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！
 	`
 	msg := dingtalk.NewMarkdown().SetMarkdown(title, text)
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		t.Fatal(err)
 	}
 }

@@ -3,13 +3,13 @@ dingtalk-sdk
 
 ## 1.dingtalk doc
 
-base on https://developers.dingtalk.com/document/app/custom-robot-access?spm=ding_open_doc.document.0.0.6d9d28e1xy0yjw#topic-2026027
+doc: https://developers.dingtalk.com/document/app/custom-robot-access?spm=ding_open_doc.document.0.0.6d9d28e1xy0yjw#topic-2026027
 
 ## 2.all you need
 
-1. create your dingtalk group.
-2. create a robot.
-3. get your param:
+1. create your dingtalk sender.
+2. create a ding robot.
+3. need param:
     - web hook
     - secret key
 
@@ -30,17 +30,16 @@ const (
 	secretKey = "your secret key" // 分配给应用的SecretKey（钉钉群机器人处获取）
 )
 
-var g *dingtalk.Group
+var s *dingtalk.Sender
 
 func init() {
-	g, _ = dingtalk.InitDingTalkGroup(webHook, secretKey)
+	s, _ = dingtalk.NewSender(webHook, secretKey)
 }
 
 // TestSendText ...
 func TestSendText(t *testing.T) {
 	msg := dingtalk.NewText().SetText("哼哼哼，啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊啊啊啊！")
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -57,8 +56,7 @@ func TestSendMarkdown(t *testing.T) {
 		* 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！
 	`
 	msg := dingtalk.NewMarkdown().SetMarkdown(title, text)
-	err := g.SendMessage(msg)
-	if err != nil {
+	if err := s.Send(msg); err != nil {
 		t.Fatal(err)
 	}
 }

@@ -18,10 +18,10 @@ type postResp struct {
 	ErrMsg  string `json:"errmsg"`
 }
 
-func (g *Group) post(cast *cast.Cast, message interface{}) error {
+func (s *Sender) post(cast *cast.Cast, message interface{}) error {
 	timestamp := time.Now().UnixNano() / 1e6
-	stringToSign := fmt.Sprintf("%d\n%s", timestamp, g.secretKey)
-	sign := hmacSha256(stringToSign, g.secretKey)
+	stringToSign := fmt.Sprintf("%d\n%s", timestamp, s.secretKey)
+	sign := hmacSha256(stringToSign, s.secretKey)
 
 	var param struct {
 		Timestamp int64  `url:"timestamp"`
