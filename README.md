@@ -10,8 +10,8 @@ doc: https://developers.dingtalk.com/document/app/custom-robot-access?spm=ding_o
 1. create your dingtalk sender.
 2. create a ding robot.
 3. need param:
-    - web hook
-    - secret key
+    * web hook
+    * secret key
 
 ## 3.example
 
